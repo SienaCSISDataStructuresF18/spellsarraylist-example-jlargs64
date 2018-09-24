@@ -8,6 +8,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class SpellsArrayList {
 
@@ -17,13 +18,13 @@ public class SpellsArrayList {
         // create an array of the magic spells we know.
         // Note: due to the way Java handles arrays and generic types,
         // we have to leave off the <String,String> in the construction..
-        Association<String,String> spells[] = new Association[NUM_SPELLS];
+        ArrayList<Association<String,String>> spells = new ArrayList<Association<String, String>>();
 	Scanner inFile = new Scanner(new File("spells.txt"));
 	for (int i = 0; i < NUM_SPELLS; i++) {
 	    String spell = inFile.nextLine().trim();
 	    String action = inFile.nextLine().trim();
        
-	    spells[i] = new Association<String,String>(spell, action);
+	    spells.add(new Association<String,String>(spell, action));
 	    //System.out.println(spells[i]);
 	}
 	inFile.close();
@@ -36,14 +37,14 @@ public class SpellsArrayList {
             System.out.print("Which spell will you use? ");
             String spellName = keyboard.next();
             spellnum = -1;
-            for (int spellIndex = 0; spellIndex < spells.length; spellIndex++) {
-                if (spellName.equals(spells[spellIndex].getKey())) {
+            for (int spellIndex = 0; spellIndex < spells.size(); spellIndex++) {
+                if (spellName.equals(spells.get(spellIndex).getKey())) {
                     spellnum = spellIndex;
                     break;
                 }
             }
             if (spellnum >= 0) {
-                System.out.println(spells[spellnum].getValue());
+                System.out.println(spells.get(spellnum).getValue());
             }
             else {
                 System.out.println("Your wand doesn't know that one.  It explodes.  Bye!");
